@@ -2,20 +2,20 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.26.0"
+      version = ">= 3.26.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "3.0.1"
+      version = ">= 3.0.1"
     }
   }
   required_version = ">= 1.1.0"
 
   cloud {
-    organization = "REPLACE_ME"
+    organization = "clouding"
 
     workspaces {
-      name = "gh-actions-demo"
+      name = "github-actions-aws"
     }
   }
 }
@@ -44,7 +44,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "web" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   user_data = <<-EOF
